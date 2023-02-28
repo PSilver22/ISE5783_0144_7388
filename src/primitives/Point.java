@@ -23,6 +23,24 @@ public class Point {
     }
 
     /**
+     * Getter for x
+     * @return value of x
+     */
+    public double getX() { return xyz.d1; }
+
+    /**
+     * Getter for y
+     * @return value of y
+     */
+    public double getY() { return xyz.d2; }
+
+    /**
+     * Getter for z
+     * @return value of z
+     */
+    public double getZ() { return xyz.d3; }
+
+    /**
      * Creates a new Point moved in the direction and magnitude of the operand Vector
      * @param op The Vector operand
      * @return New Point which is the result from the addition

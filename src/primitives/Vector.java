@@ -31,7 +31,17 @@ public class Vector extends Point {
      * @return The result of the operation
      */
     public Vector add(Vector op) {
-        return (Vector)super.add(op);
+        return new Vector(xyz.add(op.xyz));
+    }
+
+    /**
+     * Creates a new vector whose head coordinates are the difference of the head coordinates of this and op
+     * @param op The Vector operand
+     * @return The result of the operation
+     */
+    public Vector subtract(Vector op) {
+        if (equals(op)) { throw new IllegalArgumentException("Can't subtract a vector from itself."); }
+        return new Vector(xyz.subtract(op.xyz));
     }
 
     /**
