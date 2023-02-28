@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Ray;
-
+/** Cylinder class represents three-dimensional cylinder in 3D Cartesian coordinate
+ * system
+ * @author: Yossi Tyberg
+ */
 public class Cylinder extends Tube {
     //height of the tube
     private final double height;
