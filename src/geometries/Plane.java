@@ -7,8 +7,8 @@ import primitives.Vector;
  * @author Yossi Tyberg */
 public class Plane implements Geometry {
     //plane is represented by a point and the orthogonal vector
-    private final Point p;
-    private final Vector orthogVec; //vec
+    private final Point q0;
+    private final Vector normal; //vec
     /**constructor based on 3 points
      * @ param p1,p2,p3 - 3 points on the plane
      * @throws IllegalArgumentException if any point is a duplicate of any other point
@@ -19,29 +19,37 @@ public class Plane implements Geometry {
         {
             throw new IllegalArgumentException("points must be different to determine plane");
         }
-        orthogVec = null;
-        p = p1;
+        normal = null;
+        q0 = p1;
     }
     /**constructor based on a point and a vector
      * @ param p: point on the plane
      * @ param v: vector on the plane
      */
     public Plane (Point p, Vector v) {
-        this.p = p;
-        orthogVec = v.normalize();
+        q0 = p;
+        normal = v.normalize();
     }
 
     public Point getP() {
-        return p;
+        return q0;
     }
 
-    public Vector getOrthogVec() {
-        return orthogVec;
+    public Vector getNormal() {
+        return normal;
     }
     
 
     @Override
     public Vector getNormal(Point p) {
-        return orthogVec;
+        //checking if point is on plane requires the xyz values of the point and vector
+        //i.e. needs a way to access double.product()
+        return normal;
+    }
+
+    @Override
+    public String toString() {
+        return "q0: (" + q0.toString() + ", normal: " + normal.toString();
     }
 }
+
