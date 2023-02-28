@@ -43,7 +43,7 @@ public class Plane implements Geometry {
     @Override
     public Vector getNormal(Point p) {
         //checking if point is on plane requires the xyz values of the point and vector
-        //i.e. needs a way to access double.product()
+        //i.e. needs a way to access double3.product()
         return normal;
     }
 
