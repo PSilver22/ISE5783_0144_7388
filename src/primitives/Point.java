@@ -54,8 +54,15 @@ public class Point {
      * @param op Point to subtract from this
      * @return New Point which is the result from the subtraction
      */
-    public Point subtract(Point op) { return new Point(this.xyz.subtract(op.xyz)); }
+    public Point subtract(Point op) { return new Point(xyz.subtract(op.xyz)); }
 
+    /** Product two Points into a new Point where each couple of
+     * numbers is multiplied
+     * @param  rhs right handle side operand for product
+     * @return     result of product */
+    public Point product(Point rhs) {
+        return new Point((this.xyz).product(rhs.xyz));
+    }
     /**
      * Finds the distance squared between this and op
      * @param op Point to find the distance squared from
