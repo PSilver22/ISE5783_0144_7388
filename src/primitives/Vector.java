@@ -31,6 +31,7 @@ public class Vector extends Point {
      * @return The result of the operation
      */
     public Vector add(Vector op) {
+        if (equals(op.scale(-1))) { throw new IllegalArgumentException("Can't subtract a vector from itself."); }
         return new Vector(xyz.add(op.xyz));
     }
 
@@ -40,8 +41,7 @@ public class Vector extends Point {
      * @return The result of the operation
      */
     public Vector subtract(Vector op) {
-        if (equals(op)) { throw new IllegalArgumentException("Can't subtract a vector from itself."); }
-        return new Vector(xyz.subtract(op.xyz));
+        return add(op.scale(-1));
     }
 
     /**
