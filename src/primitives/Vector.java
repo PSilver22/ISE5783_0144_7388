@@ -31,8 +31,7 @@ public class Vector extends Point {
      * @return The result of the operation
      */
     public Vector add(Vector op) {
-        if (equals(op.scale(-1))) { throw new IllegalArgumentException("Can't subtract a vector from itself."); }
-        return (Vector)super.add(op);
+        return new Vector(xyz.add(op.xyz));
     }
 
     /**
@@ -42,7 +41,7 @@ public class Vector extends Point {
      */
     public Vector subtract(Vector op) {
         if (equals(op)) { throw new IllegalArgumentException("Can't subtract a vector from itself."); }
-        return (Vector)super.subtract(op);
+        return new Vector(xyz.subtract(op.xyz));
     }
 
     /**
@@ -95,4 +94,10 @@ public class Vector extends Point {
      * @return The normalized vector
      */
     public Vector normalize() { return scale(1 / length()); }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Point) { return false; }
+        return super.equals(o);
+    }
 }
