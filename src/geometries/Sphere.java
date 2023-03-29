@@ -31,12 +31,11 @@ public class Sphere implements Geometry{
 
     @Override
     public Vector getNormal(Point p) {
-        return null;
+        return (new Vector(p.subtract(center))).normalize();
     }
 
     @Override
     public String toString() {
         return "center:" + center + ", radius=" + radius;
     }
-
 }

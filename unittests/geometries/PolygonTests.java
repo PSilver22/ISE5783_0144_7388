@@ -1,4 +1,4 @@
-package unittests.geometries;
+package geometries;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,7 +81,7 @@ public class PolygonTests {
       assertEquals(1, result.length(), 0.00000001, "Polygon's normal is not a unit vector");
       // ensure the result is orthogonal to all the edges
       for (int i = 0; i < 3; ++i)
-         assertTrue(isZero(result.dotProduct(pts[i].subtract(pts[i == 0 ? 3 : i - 1]))),
+         assertTrue(isZero(result.dotProduct((Vector)pts[i].subtract(pts[i == 0 ? 3 : i - 1]))),
                     "Polygon's normal is not orthogonal to one of the edges");
    }
 }

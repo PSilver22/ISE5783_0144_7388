@@ -16,6 +16,12 @@ public class Vector extends Point {
     }
 
     /**
+     * Constructor for a Vector with its head at Point head
+     * @param head Point representing the head
+     */
+    public Vector(Point head) { this(head.getX(), head.getY(), head.getZ()); }
+
+    /**
      * Constructor for a Vector with its head at the coordinates x, y, z
      * @param x Head x-axis coordinate
      * @param y Head y-axis coordinate
@@ -97,7 +103,7 @@ public class Vector extends Point {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Point) { return false; }
-        return super.equals(o);
+        if (o instanceof Vector) { return super.equals(o); }
+        return false;
     }
 }
