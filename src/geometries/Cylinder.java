@@ -1,6 +1,9 @@
 package geometries;
 
+import primitives.Point;
 import primitives.Ray;
+import primitives.Vector;
+
 /** Cylinder class represents three-dimensional cylinder in 3D Cartesian coordinate
  * system
  * @author: Yossi Tyberg
@@ -22,9 +25,12 @@ public class Cylinder extends Tube {
     }
 
     @Override
+    public Vector getNormal(Point p) {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return super.toString() + ", height:" + height;
     }
-
-    //getNormal should be same as tube, i.e. inherited
 }
