@@ -3,8 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 /** Plane class represents two-dimensional plane in 3D Cartesian coordinate
  * system
