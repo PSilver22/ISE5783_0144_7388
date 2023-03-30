@@ -15,5 +15,5 @@ public class Triangle extends Polygon {
         super(p1,p2,p3);
     }
 
-    //getters,toString should be inherited from polygon
+    //getters,toString,getNormal should be inherited from polygon
 }
