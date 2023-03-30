@@ -44,7 +44,8 @@ public class Plane implements Geometry {
         {
             throw new IllegalArgumentException("all points are on the same line");
         }
-        normal = null;
+        //normal is the cross product of vectors on the plane, in this case p2-p1 and p3-p1
+        normal = (directionV.crossProduct((Vector)p3.subtract(p1))).normalize();
         q0 = p1;
     }
     /**constructor based on a point and a vector
@@ -67,8 +68,6 @@ public class Plane implements Geometry {
 
     @Override
     public Vector getNormal(Point p) {
-        //checking if point is on plane requires the xyz values of the point and vector
-        //i.e. needs a way to access double3.product()
         return normal;
     }
 
