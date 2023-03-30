@@ -94,4 +94,10 @@ public class Vector extends Point {
      * @return The normalized vector
      */
     public Vector normalize() { return scale(1 / length()); }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Point) { return false; }
+        return super.equals(o);
+    }
 }
