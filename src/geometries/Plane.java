@@ -26,7 +26,8 @@ public class Plane implements Geometry {
 
         //throw exception if all points are on the same line (b/c a line isn't a plane)
 
-        Vector directionV = (Vector)p2.subtract(p1); //direction vector of the line between p1,p2
+        Point temp = p2.subtract(p1);
+        Vector directionV = new Vector(temp.getX(), temp.getY(), temp.getZ()); //direction vector of the line between p1,p2
         //booleans determining whether there's a change in each coordinate on the line (if it's 0
         //there isn't)
         boolean dX = directionV.getX() != 0;
@@ -45,7 +46,9 @@ public class Plane implements Geometry {
             throw new IllegalArgumentException("all points are on the same line");
         }
         //normal is the cross product of vectors on the plane, in this case p2-p1 and p3-p1
-        normal = (directionV.crossProduct((Vector)p3.subtract(p1))).normalize();
+        Point why = p3.subtract(p1);
+        Vector nec = new Vector(why.getX(), why.getY(), why.getZ());
+        normal = (directionV.crossProduct(nec)).normalize();
         q0 = p1;
     }
     /**constructor based on a point and a vector
@@ -68,7 +71,7 @@ public class Plane implements Geometry {
 
     @Override
     public Vector getNormal(Point p) {
-        return normal;
+        return getNormal();
     }
 
     @Override
