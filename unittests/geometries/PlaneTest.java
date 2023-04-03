@@ -33,7 +33,8 @@ class PlaneTest {
         // ============ Equivalence Partitions Tests ==============
         Vector testN = new Plane(new Point(1, 5, 7), new Point(6, 4, 8), new Point(9, 4, 1)).getNormal();
         Vector expected = new Vector(new Double3(7, 38, 3)).normalize(); //normalized cross product of the above
-        assertTrue(expected == testN || expected.scale(-1) == testN,
+
+        assertTrue(expected.equals(testN) || (expected.scale(-1)).equals(testN),
                 "Error: 3 points constructor does not calculate normal correctly");
     }
 }
