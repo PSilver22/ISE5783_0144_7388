@@ -37,6 +37,15 @@ public class Tube implements Geometry{
 
     @Override
     public Vector getNormal(Point p) {
-        return null;
+        try {
+            // Find the point along the ray that is perpendicular to p
+            double t = ray.getVector().dotProduct(new Vector(p.subtract(ray.getPoint())));
+            Point o = ray.getPoint().add(ray.getVector().scale(t));
+
+            return new Vector(p.subtract(o)).normalize();
+        } catch (IllegalArgumentException e) {
+            // If P - P0 is perpendicular to ray's vector, then t will be 0 and scaling would create the 0 vector
+            return new Vector(p.subtract(ray.getPoint())).normalize();
+        }
     }
 }

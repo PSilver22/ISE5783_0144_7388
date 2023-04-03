@@ -16,6 +16,12 @@ public class Vector extends Point {
     }
 
     /**
+     * Constructor for a Vector with its head at Point head
+     * @param head Point representing the head
+     */
+    public Vector(Point head) { this(head.getX(), head.getY(), head.getZ()); }
+
+    /**
      * Constructor for a Vector with its head at the coordinates x, y, z
      * @param x Head x-axis coordinate
      * @param y Head y-axis coordinate
@@ -94,4 +100,10 @@ public class Vector extends Point {
      * @return The normalized vector
      */
     public Vector normalize() { return scale(1 / length()); }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Vector) { return super.equals(o); }
+        return false;
+    }
 }
