@@ -26,7 +26,19 @@ public class Cylinder extends Tube {
 
     @Override
     public Vector getNormal(Point p) {
-        return null;
+        try {
+            double t = ray.getVector().dotProduct(new Vector(p.subtract(ray.getPoint())));
+
+            if (t == 0) {
+                return ray.getVector().scale(-1);
+            } else if (t == height) {
+                return ray.getVector();
+            } else {
+                return super.getNormal(p);
+            }
+        } catch (IllegalArgumentException e) {
+            return ray.getVector().scale(-1);
+        }
     }
 
     @Override
