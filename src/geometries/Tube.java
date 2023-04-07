@@ -5,6 +5,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /** Tube class represents three-dimensional tube in 3D Cartesian coordinate
  * system
  * @author: Yossi Tyberg
@@ -48,4 +50,7 @@ public class Tube implements Geometry{
             return new Vector(p.subtract(ray.getPoint())).normalize();
         }
     }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) { return null; }
 }
