@@ -28,7 +28,6 @@ class PlaneTest {
                 "Error, constructs a plane from points on the same line");
     }
 
-    //test that a plane constructed from 3 points returns the correct normal
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Tests ==============
