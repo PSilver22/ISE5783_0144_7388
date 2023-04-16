@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /** Sphere class represents three-dimensional sphere in 3D Cartesian coordinate
  * system
@@ -33,6 +36,9 @@ public class Sphere implements Geometry{
     public Vector getNormal(Point p) {
         return (new Vector(p.subtract(center))).normalize();
     }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) { return null; }
 
     @Override
     public String toString() {

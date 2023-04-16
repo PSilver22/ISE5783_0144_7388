@@ -1,8 +1,12 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.*;
+
+import java.util.List;
 
 
 /** Plane class represents two-dimensional plane in 3D Cartesian coordinate
@@ -72,6 +76,27 @@ public class Plane implements Geometry {
     @Override
     public Vector getNormal(Point p) {
         return getNormal();
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        // if the base of the ray is on the reference point
+        if (q0.equals(ray.getPoint())) return null;
+
+        // Find the scale of the ray if it does intersect the plane
+        double nQMinusP0 = normal.dotProduct(new Vector(q0.subtract(ray.getPoint())));
+        double nv = normal.dotProduct(ray.getVector());
+
+        // If the ray is parallel to the plane
+        if (isZero(nv)) return null;
+
+        double t = alignZero(nQMinusP0 / nv);
+
+        // If the ray scales in the positive direction, return the found point
+        if (t > 0) return List.of(ray.getPoint().add(ray.getVector().scale(t)));
+
+        // Otherwise, return null
+        return null;
     }
 
     @Override
