@@ -29,6 +29,13 @@ public class Ray {
         return dir;
     }
 
+    public Point getPoint(double t)
+    {
+        double x = p0.getX() + t*dir.getX();
+        double y = p0.getY() + t*dir.getY();
+        double z = p0.getZ() + t*dir.getZ();
+        return new Point(x,y,z);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }

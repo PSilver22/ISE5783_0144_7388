@@ -41,8 +41,8 @@ public class Plane implements Geometry {
         double x  = dX ? (p3.getX()-p2.getX()) / directionV.getX() : p3.getX();
         double y  = dY ? (p3.getY()-p2.getY()) / directionV.getY() : p3.getY();
         double z  = dZ ? (p3.getZ()-p2.getZ()) / directionV.getZ() : p3.getZ();
-        //if the coordinates that aren't 0 in the direction vector are equal and those that are,
-        //are equal to p2's coordinates then all points are on the same line.
+        //if the coordinates that aren't 0 in the direction vector are equal, and those that are,
+        //are equal to p2's coordinates, then all points are on the same line.
         if((x != y && dX && dY) || (x != z && dX && dZ) || (y != z && dY && dZ)) {}
         else if(!dX && x!= p2.getX() || !dY && y!= p2.getY() || !dZ && z!= p2.getZ()) {}
         else
