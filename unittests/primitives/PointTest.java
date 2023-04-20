@@ -45,4 +45,24 @@ class PointTest {
                 new Point(1, 1, 1),
                 "Point - Point does not work correctly");
     }
+
+    /**
+     * Test method for {@link primitives.Point#distanceSquared(primitives.Point)}
+     */
+    @Test
+    void distanceSquared()
+    {
+        // ============ Equivalence Partitions Test ==============
+        assertEquals(0,new Point(0, 0, 0).distanceSquared(new Point(1,1,1)) - 3, 0.00000001,
+                "ERROR: length() wrong value");
+    }
+
+    @Test
+    void distance()
+    {
+        // ============ Equivalence Partitions Test ==============
+        assertEquals(0,new Point(0, 0, 0).distance(new Point(1,1,1)) - Math.sqrt(3), 0.00000001,
+                "ERROR: length() wrong value");
+    }
 }
+
