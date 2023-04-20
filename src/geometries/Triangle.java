@@ -56,6 +56,9 @@ public class Triangle extends Polygon {
             if (baryY <= 0 || baryY > 1) return null;
             if (baryZ <= 0 || baryZ > 1) return null;
 
+            // The barycentric coordinates must add to 0
+            if (!isZero(1 - (baryX + baryY + baryZ))) return null;
+
             return intersectionList;
         } catch (IllegalArgumentException e) {
             return null;
