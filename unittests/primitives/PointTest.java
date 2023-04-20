@@ -19,10 +19,14 @@ class PointTest {
         Point p1 = new Point(1, 2, 3);
         Vector v2 = new Vector(-1, -2, -3);
 
+        // ------ Boundary Value Analysis ------
+
         // TC01: Move the point to the origin
         assertEquals(p1.add(v2),
                 new Point(0, 0, 0),
                 "Point + -Point does not work correctly");
+
+        // ------ Equivalence Partition ------
 
         // TC02: Adding two points
         assertEquals(p1.add(new Vector(-2, -4, -6)),
@@ -34,6 +38,8 @@ class PointTest {
     void subtract() {
         Point p1 = new Point(1, 2, 3);
         Point p2 = new Point(-2, -4, -6);
+
+        // ------ Equivalence Partition ------
 
         // TC01: Subtract two points
         assertEquals(p1.subtract(p2),

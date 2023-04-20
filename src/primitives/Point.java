@@ -54,7 +54,7 @@ public class Point {
      * @param op Point to subtract from this
      * @return New Point which is the result from the subtraction
      */
-    public Point subtract(Point op) { return new Point(xyz.subtract(op.xyz)); }
+    public Vector subtract(Point op) { return new Vector(xyz.subtract(op.xyz)); }
 
     /** Product two Points into a new Point where each couple of
      * numbers is multiplied

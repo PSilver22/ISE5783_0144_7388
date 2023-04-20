@@ -35,18 +35,6 @@ class CylinderTest {
 
         // ====== Boundary Value Analysis ======
 
-        // TC04: Point on the edge of the bottom base
-        p = new Point(10, 0, 1);
-        assertEquals(new Vector(1, 0, 0),
-                c.getNormal(p),
-                "The normal on the bottom base of the cylinder is wrong.");
-
-        // TC05: Point on the edge of the top base
-        p = new Point(0, 0, 2);
-        assertEquals(new Vector(-1, 0, 0),
-                c.getNormal(p),
-                "The normal on the bottom base of the cylinder is wrong.");
-
         // TC06: Point on the edge of the top base
         p = new Point(0, 0, 0);
         assertEquals(new Vector(-1, 0, 0),

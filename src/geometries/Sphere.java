@@ -49,17 +49,14 @@ public class Sphere implements Geometry{
         //calculate tm and d
         //if ray base and sphere center are the same the vector connecting them is the 0 vector
         //(which would trigger exception) and tm = d = 0
-        if ((center.subtract(ray.getPoint())).equals(new Point(ZERO)))
-        {
-            tm = 0;
-            d = 0;
-        }
-        else
-        {
-            //get vector between ray base and sphere center
+        try {
             Vector u = new Vector(center.subtract(ray.getPoint()));
             tm = ray.getVector().dotProduct(u);
             d = Math.sqrt(u.lengthSquared()-(tm*tm));
+        }
+        catch (IllegalArgumentException e) {
+            tm = 0;
+            d = 0;
         }
 
         //if d>=radius the ray's closest point to the center (the sphere) is outside/tangent to the sphere(no intersect)
