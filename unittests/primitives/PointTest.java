@@ -59,6 +59,7 @@ class PointTest {
     void distanceSquared()
     {
         // ============ Equivalence Partitions Test ==============
+        //test if distanceSquared method returns correct result
         assertEquals(0,new Point(0, 0, 0).distanceSquared(new Point(1,1,1)) - 3, 0.00000001,
                 "ERROR: length() wrong value");
     }
@@ -70,6 +71,7 @@ class PointTest {
     void distance()
     {
         // ============ Equivalence Partitions Test ==============
+        //test if distance method returns correct result
         assertEquals(0,new Point(0, 0, 0).distance(new Point(1,1,1)) - Math.sqrt(3), 0.00000001,
                 "ERROR: length() wrong value");
     }
