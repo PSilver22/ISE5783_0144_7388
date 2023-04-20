@@ -43,12 +43,12 @@ class PointTest {
 
         // TC01: Subtract two points
         assertEquals(p1.subtract(p2),
-                new Point(3, 6, 9),
+                new Vector(3, 6, 9),
                 "Point - Point does not work correctly");
 
         // TC02: Subtract two more points
         assertEquals(new Point(2, 3, 4).subtract(p1),
-                new Point(1, 1, 1),
+                new Vector(1, 1, 1),
                 "Point - Point does not work correctly");
     }
 
