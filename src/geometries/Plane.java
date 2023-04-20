@@ -93,7 +93,7 @@ public class Plane implements Geometry {
         double t = alignZero(nQMinusP0 / nv);
 
         // If the ray scales in the positive direction, return the found point
-        if (t > 0) return List.of(ray.getPoint().add(ray.getVector().scale(t)));
+        if (t > 0) return List.of(ray.getPoint(t));
 
         // Otherwise, return null
         return null;

@@ -29,12 +29,14 @@ public class Ray {
         return dir;
     }
 
+
+    /**
+     * calculate a point on a ray given a scalar by which to multiply direction vector
+     * @param t scalar for vector multiplication
+     */
     public Point getPoint(double t)
     {
-        double x = p0.getX() + t*dir.getX();
-        double y = p0.getY() + t*dir.getY();
-        double z = p0.getZ() + t*dir.getZ();
-        return new Point(x,y,z);
+        return p0.add(dir.scale(t));
     }
     @Override
     public boolean equals(Object o) {
