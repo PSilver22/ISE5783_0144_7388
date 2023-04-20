@@ -63,6 +63,9 @@ class PointTest {
                 "ERROR: length() wrong value");
     }
 
+    /**
+     * Test method for {@link primitives.Point#distance(primitives.Point)}
+     */
     @Test
     void distance()
     {
