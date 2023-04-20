@@ -33,8 +33,8 @@ class GeometriesTest {
                 "TC03: findIntersections doesn't return exactly 1 point when there is one intersection.");
 
         // TC04: All Intersections
-        assertEquals(5, g.findIntersections(new Ray(new Point(0, 1.5, 1), new Vector(1, -1, 0))).size(),
-                "TC04: findIntersections doesn't return exactly 5 intersections pointer where there are 5 intersections.");
+        assertEquals(4, g.findIntersections(new Ray(new Point(0, 1.5, 0), new Vector(.75, -1, 1))).size(),
+                "TC04: findIntersections doesn't return exactly 4 intersections pointer where there are 4 intersections.");
 
         // ------ Equivalence Partition ------
 

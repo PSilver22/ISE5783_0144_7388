@@ -9,10 +9,17 @@ import java.util.List;
 public class Geometries implements Intersectable {
     private List<Intersectable> shapes;
 
+    /**
+     * Constructor for empty Geometries
+     */
     public Geometries() {
         shapes = new LinkedList<>();
     }
 
+    /**
+     * Constructor for Geometries which is made up of the passed Intersectables
+     * @param geometries Intersectable objects which make up the Geometries
+     */
     public Geometries(Intersectable... geometries) {
         this();
 
@@ -20,13 +27,19 @@ public class Geometries implements Intersectable {
         shapes.addAll(List.of(geometries));
     }
 
+    /**
+     * Add intersectables to the Geometries object
+     * @param geometries List of intersectables to add
+     */
     public void add(Intersectable... geometries) {
         shapes.addAll(List.of(geometries));
     }
 
+    @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> result = null;
 
+        // Collect all the intersections of the shapes in the Geometries object and the ray
         for (Intersectable shape : shapes) {
             List<Point> shapeIntersections = shape.findIntersections(ray);
 

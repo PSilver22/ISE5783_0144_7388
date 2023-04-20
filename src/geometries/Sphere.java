@@ -85,6 +85,6 @@ public class Sphere implements Geometry{
 
     @Override
     public String toString() {
-        return "center:" + center + ", radius=" + radius;
+        return "center: " + center + ", radius = " + radius;
     }
 }
