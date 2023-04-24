@@ -7,6 +7,7 @@ import primitives.Vector;
 import java.util.List;
 
 import static primitives.Double3.ZERO;
+import static primitives.Util.alignZero;
 
 /** Sphere class represents three-dimensional sphere in 3D Cartesian coordinate
  * system
@@ -67,8 +68,8 @@ public class Sphere implements Geometry{
         //distance along the ray between the outer edge of the sphere and point closest the sphere's center
         double th = Math.sqrt((radius*radius) - (d*d));
         //scalars for direction vector of ray
-        double t1 = tm+th;
-        double t2 = tm-th;
+        double t1 = alignZero(tm+th);
+        double t2 = alignZero(tm-th);
         //return a list of the intersection points in the direction of the ray - who are scaled positively
         if(t1 > 0 && t2 > 0)
             {return List.of(ray.getPoint(t1), ray.getPoint(t2));}
