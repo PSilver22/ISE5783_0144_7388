@@ -67,5 +67,26 @@ public class Camera {
      * @param i The row of the pixel to shoot the ray through
      * @return A ray with its base at the location of the camera and it's direction pointing through the pixel at row i and column j
      */
-    public Ray constructRay(int nX, int nY, int j, int i) { return null; }
+    public Ray constructRay(int nX, int nY, int j, int i) {
+        //calculate center of view plane
+        Point pCenter = location.add(to.scale(vpDistance));
+        //calculate pixel height and width
+        double Rx = vpWidth/nX;
+        double Ry = vpHeight/nY;
+        //calculate scalars for distance of pixel center from view plane's center
+        double xJ = (j - (nX-1)/2) * Rx;
+        double yI = (i - (nY-1)/2) * Ry;
+        //calculate center of pixel
+        Point pIJ = pCenter;
+        if (!isZero(xJ))
+        {
+            pIJ.add(right.scale(xJ));
+        }
+        if (!isZero(yI))
+        {
+            pIJ.add(up.scale(yI));
+        }
+
+        return new Ray(location, (pIJ.subtract(location)).normalize());
+    }
 }
