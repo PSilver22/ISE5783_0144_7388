@@ -1,9 +1,6 @@
 package renderer;
 
-import geometries.Geometries;
-import geometries.Geometry;
-import geometries.Intersectable;
-import geometries.Sphere;
+import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -52,8 +49,6 @@ class CameraIntegrationTest {
     public void sphereIntegrationTest() {
         //T1, sphere radius 1 directly ahead at a near distance (2 intersections)
         Sphere sphere = new Sphere(new Point(0,0,-3),1);
-        //Ray r = new Ray(new Point(0,0,1), new Vector(0,1,2).normalize());
-        //assertEquals(r, cam.constructRay(3,3,1,2), "h");
         assertEquals(2, sumPixelIntersections(constructAllRays(cam, nX, nY), sphere), e);
 
         //T2 sphere radius 2.5 directly ahead tangent to vp center (18 intersections)
@@ -72,7 +67,31 @@ class CameraIntegrationTest {
         sphere = new Sphere(new Point(0,0,1),0.25);
         assertEquals(0, sumPixelIntersections(constructAllRays(cam, nX, nY), sphere), e);
         }
+    @Test
+    public void planeIntegrationTest() {
+        //T1: plane orthogonal to camera (9 intersections)
+        Plane plane = new Plane(new Point(0,0,-3), new Point(1,0,-3), new Point(0,1,-3));
+        assertEquals(9, sumPixelIntersections(constructAllRays(cam, nX, nY), plane), e);
 
+        //T2: steep diagonal plane (9 intersections)
+        plane = new Plane(new Point(1,-1,-1), new Point(-1,-1,-1), new Point(0,1,0));
+        assertEquals(9, sumPixelIntersections(constructAllRays(cam, nX, nY), plane), e);
 
+        //T3: shallow diagonal plane (6 intersections)
+        plane = new Plane(new Point(1,0,-1), new Point(-1,0,-1), new Point(0,1,0));
+        assertEquals(6, sumPixelIntersections(constructAllRays(cam, nX, nY), plane), e);
+    }
+
+    @Test
+    public void triangleIntegrationTest() {
+        //T1: small center triangle (1 intersections)
+        Triangle triangle = new Triangle(new Point(0.5,-0.5,-1), new Point(-0.5,-0.5,-1), new Point(0, 0.5, -1));
+        assertEquals(1, sumPixelIntersections(constructAllRays(cam, nX, nY), triangle), e);
+
+        //T2: narrow upper center triangle (2 intersections)
+        triangle = new Triangle(new Point(0.5,-0.5,-1), new Point(-0.5,-0.5,-1), new Point(0, 20, -1));
+        assertEquals(2, sumPixelIntersections(constructAllRays(cam, nX, nY), triangle), e);
+
+    }
     }
 
