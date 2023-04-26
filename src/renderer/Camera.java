@@ -80,11 +80,11 @@ public class Camera {
         Point pIJ = pCenter;
         if (!isZero(xJ))
         {
-            pIJ.add(right.scale(xJ));
+            pIJ = pIJ.add(right.scale(xJ));
         }
         if (!isZero(yI))
         {
-            pIJ.add(up.scale(yI));
+            pIJ = pIJ.add(up.scale(yI));
         }
 
         return new Ray(location, (pIJ.subtract(location)).normalize());
