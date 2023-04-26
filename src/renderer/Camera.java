@@ -74,8 +74,8 @@ public class Camera {
         double Rx = vpWidth/nX;
         double Ry = vpHeight/nY;
         //calculate scalars for distance of pixel center from view plane's center
-        double xJ = (j - (nX-1)/2) * Rx;
-        double yI = (i - (nY-1)/2) * Ry;
+        double xJ = (j - (nX-1)/2d) * Rx;
+        double yI = -1 * (i - (nY-1)/2d) * Ry;
         //calculate center of pixel
         Point pIJ = pCenter;
         if (!isZero(xJ))
