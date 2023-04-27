@@ -42,6 +42,10 @@ public class Camera {
      * @return The instance of the camera with the view plane shape modified.
      */
     public Camera setVPSize(double width, double height) {
+        if (width <= 0 || height <= 0)
+        {
+            throw new IllegalArgumentException("view plane size must be positive");
+        }
         this.vpWidth = width;
         this.vpHeight = height;
 
@@ -54,6 +58,10 @@ public class Camera {
      * @return The instance of the camera with the view plane distance modified
      */
     public Camera setVPDistance(double distance) {
+        if (distance <= 0)
+        {
+            throw new IllegalArgumentException("distance to view plane must be positive");
+        }
         this.vpDistance = distance;
 
         return this;
@@ -75,7 +83,7 @@ public class Camera {
         double Ry = vpHeight/nY;
         //calculate scalars for distance of pixel center from view plane's center
         double xJ = (j - (nX-1)/2d) * Rx;
-        double yI = -1 * (i - (nY-1)/2d) * Ry;
+        double yI = -(i - (nY-1)/2d) * Ry;
         //calculate center of pixel
         Point pIJ = pCenter;
         if (!isZero(xJ))
