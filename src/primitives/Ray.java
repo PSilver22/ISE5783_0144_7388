@@ -77,28 +77,6 @@ public class Ray {
         return false;
     }
 
-    /**
-     * Finds the point in the list of points which is closest to the head of the ray.
-     * @param points List of points to check
-     * @return The point from points which is closest to the head of the ray
-     */
-    public Point findClosestPoint(List<Point> points) {
-        Point head = p0.add(dir);
-
-        double minDistance = -1;
-        Point minPoint = null;
-        for (Point point : points) {
-            double distance = head.distance(point);
-
-            if (minDistance > distance || minPoint == null) {
-                minDistance = distance;
-                minPoint = point;
-            }
-        }
-
-        return minPoint;
-    }
-
     @Override
     public String toString() {
         return p0.toString() + " -> " + p0.add(dir).toString();

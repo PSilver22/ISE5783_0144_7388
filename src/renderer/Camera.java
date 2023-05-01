@@ -1,8 +1,11 @@
 package renderer;
 
+import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
+import java.util.MissingResourceException;
 
 import static primitives.Util.isZero;
 
@@ -19,6 +22,9 @@ public class Camera {
     // The shape and distance from the camera of the view plane
     private double vpWidth = 0, vpHeight = 0, vpDistance = 0;
 
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracer;
+
     /**
      * Creates an instance of a camera
      * @param location Location of the camera in 3D space
@@ -33,6 +39,17 @@ public class Camera {
         this.to = to.normalize();
         this.up = up.normalize();
         this.right = to.crossProduct(up).normalize();
+    }
+
+    protected String getMissingResource() {
+        if (location == null) return "location";
+        if (to == null) return "to";
+        if (up == null) return "up";
+        if (right == null) return "right";
+        if (imageWriter == null) return "imageWriter";
+        if (rayTracer == null) return "rayTracer";
+
+        return null;
     }
 
     /**
@@ -96,5 +113,71 @@ public class Camera {
         }
 
         return new Ray(location, (pIJ.subtract(location)).normalize());
+    }
+
+    /**
+     * Sets the imageWriter and returns the camera instance for builder design pattern.
+     * @param iw
+     * @return The instance of the (now modified) camera.
+     */
+    public Camera setImageWriter(ImageWriter iw) {
+        this.imageWriter = iw;
+
+        return this;
+    }
+
+    /**
+     * Sets the rayTracer and returns the camera instance for builder design pattern.
+     * @param rayTracer
+     * @return The instance of the (now modified) camera.
+     */
+    public Camera setRayTracer(RayTracerBase rayTracer) {
+        this.rayTracer = rayTracer;
+
+        return this;
+    }
+
+    /**
+     * Finds and sets the color of each pixel in the viewplane.
+     */
+    public void renderImage() {
+        if (getMissingResource() != null) {
+            throw new MissingResourceException("The camera is object is not fully built.", "Camera", getMissingResource());
+        }
+
+        // Shoot a ray at every pixel
+        for (int row = 0; row < imageWriter.getNy(); ++row) {
+            for (int col = 0; col < imageWriter.getNx(); ++col) {
+                Ray currRay = constructRay(imageWriter.getNx(), imageWriter.getNy(), col, row);
+                imageWriter.writePixel(col, row, rayTracer.traceRay(currRay));
+            }
+        }
+    }
+
+    /**
+     * Prints a grid over the image
+     * @param interval Squares of the grid will have width and height equal to interval
+     * @param color color of the grid
+     */
+    public void printGrid(int interval, Color color) {
+        if (imageWriter == null) throw new MissingResourceException("The Camera object is not fully built.", "Camera", "imageWriter");
+
+        // Loop through the image pixels and place a grid pixel every interval number of pixels
+        for (int row = 0; row < imageWriter.getNy(); ++row) {
+            for (int col = 0; col < imageWriter.getNx(); ++col) {
+                if (col % interval == 0 || row % interval == 0) {
+                    imageWriter.writePixel(col, row, color);
+                }
+            }
+        }
+    }
+
+    /**
+     * Writes the current pixels to an image file.
+     */
+    public void writeToImage() {
+        if (imageWriter == null) throw new MissingResourceException("The Camera object is not fully built.", "Camera", "imageWriter");
+
+        imageWriter.writeToImage();
     }
 }
