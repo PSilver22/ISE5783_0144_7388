@@ -7,6 +7,8 @@ public class Point {
     /** x, y, z coordinate tuple */
     Double3 xyz;
 
+    /** Zero Point (0,0,0) */
+    public static final Point ZERO = new Point(Double3.ZERO);
     /** Constructor which initializes the point with a 3-tuple
      * @param xyz 3-tuple with x, y, z coordinates
      */

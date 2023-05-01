@@ -40,6 +40,33 @@ public class Ray {
     {
         return p0.add(dir.scale(t));
     }
+
+    /**
+     * given a list of points, calculate the closest point to the base of the ray
+     * throws exception if list is null or empty
+     * @param points List of points to find the closest of
+     */
+    public Point findClosestPoint (List<Point> points)
+    {
+        if(points == null)
+        {
+            throw new IllegalArgumentException("points list is null");
+        }
+        if (points.size() == 0)
+        {
+            throw new IllegalArgumentException("points list is empty");
+        }
+        Point closest = points.get(0);
+        for (int i = 1; i < points.size(); i++)
+        {
+            if(points.get(i).distanceSquared(p0) < closest.distanceSquared(p0))
+            {
+                closest = points.get(i);
+            }
+        }
+        return closest;
+
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
