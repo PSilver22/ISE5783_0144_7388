@@ -17,7 +17,7 @@ public class Scene {
         this.name = name;
     }
 
-
+    //setter methods.  Return a scene as per builder pattern
     public Scene setAmbientLight(AmbientLight ambLight)
     {
         ambientLight = ambLight;
@@ -27,6 +27,11 @@ public class Scene {
     public Scene setBackground(Color color)
     {
         background = color;
+        return this;
+    }
+
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
         return this;
     }
 }

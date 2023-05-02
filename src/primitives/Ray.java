@@ -48,6 +48,7 @@ public class Ray {
      */
     public Point findClosestPoint (List<Point> points)
     {
+        //throw appropriate exception for illegal input
         if(points == null)
         {
             throw new IllegalArgumentException("points list is null");
@@ -56,16 +57,20 @@ public class Ray {
         {
             throw new IllegalArgumentException("points list is empty");
         }
+        //find closest point
+
         Point closest = points.get(0);
         for (int i = 1; i < points.size(); i++)
         {
+            //if current point is closer than closest, update closest
+            //(using distanceSquared is more efficient than distance)
             if(points.get(i).distanceSquared(p0) < closest.distanceSquared(p0))
             {
                 closest = points.get(i);
             }
         }
-        return closest;
 
+        return closest;
     }
     @Override
     public boolean equals(Object o) {
