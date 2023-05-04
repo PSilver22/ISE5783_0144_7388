@@ -53,4 +53,9 @@ public class Scene {
         background = color;
         return this;
     }
+
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
+        return this;
+    }
 }

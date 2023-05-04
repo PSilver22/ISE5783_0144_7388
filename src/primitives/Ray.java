@@ -73,7 +73,6 @@ public class Ray {
                 closestDistance = distance;
             }
         }
-
         return closest;
     }
     @Override
