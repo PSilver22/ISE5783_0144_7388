@@ -8,7 +8,7 @@ import scene.Scene;
 import java.util.List;
 
 /**
- * Class which renders an image using ray tracing.
+ * Class which follows a Ray through a 3D scene and calculates the colors it picks up.
  */
 public class RayTracerBasic extends RayTracerBase {
     public RayTracerBasic(Scene scene) {

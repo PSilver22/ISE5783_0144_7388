@@ -23,10 +23,18 @@ public class Ray {
         this.dir = dir.normalize();
     }
 
+    /**
+     * Getter for the base point
+     * @return
+     */
     public Point getPoint() {
         return p0;
     }
 
+    /**
+     * Getter for the direction vector
+     * @return
+     */
     public Vector getVector() {
         return dir;
     }
@@ -35,6 +43,7 @@ public class Ray {
     /**
      * calculate a point on a ray given a scalar by which to multiply direction vector
      * @param t scalar for vector multiplication
+     * @return The head of t * Ray.
      */
     public Point getPoint(double t)
     {
@@ -42,30 +51,30 @@ public class Ray {
     }
 
     /**
-     * given a list of points, calculate the closest point to the base of the ray
-     * throws exception if list is null or empty
-     * @param points List of points to find the closest of
+     * Given a list of points, calculate the closest point to the head of the Ray.
+     * @throws NullPointerException If list of points is null
+     * @param points List of points to search through
+     * @return Point closest to head of the ray or null if the passed list is empty
      */
     public Point findClosestPoint (List<Point> points)
     {
-        if(points == null)
-        {
-            throw new IllegalArgumentException("points list is null");
-        }
-        if (points.size() == 0)
-        {
-            throw new IllegalArgumentException("points list is empty");
-        }
-        Point closest = points.get(0);
-        for (int i = 1; i < points.size(); i++)
-        {
-            if(points.get(i).distanceSquared(p0) < closest.distanceSquared(p0))
-            {
-                closest = points.get(i);
+        if (points == null) throw new NullPointerException("The points list passed is null.");
+
+        Point head = p0.add(dir);
+
+        // Search for the point with the shortest distance
+        Point closest = null;
+        double closestDistance = -1;
+        for (Point p : points) {
+            double distance = head.distanceSquared(p);
+
+            if (closest == null || closestDistance > distance) {
+                closest = p;
+                closestDistance = distance;
             }
         }
-        return closest;
 
+        return closest;
     }
     @Override
     public boolean equals(Object o) {

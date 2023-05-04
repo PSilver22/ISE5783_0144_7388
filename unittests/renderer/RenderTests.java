@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 import geometries.Sphere;
 import geometries.Triangle;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /** Test rendering a basic image
  * @author Dan */
@@ -77,23 +78,27 @@ public class RenderTests {
         // camera.printGrid(100, new Color(WHITE));
         // camera.writeToImage();
         // }
-/*
+
     /** Test for XML based scene - for bonus */
-/*    @Test
+   @Test
    public void basicRenderXml() {
-        Scene  scene  = new Scene("XML Test scene");
         // enter XML file name and parse from XML file into scene object
         // using the code you added in appropriate packages
         // ...
         // NB: unit tests is not the correct place to put XML parsing code
 
-        Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))     //
-                .setVPDistance(100)                                                                //
-                .setVPSize(500, 500).setImageWriter(new ImageWriter("xml render test", 1000, 1000))
-                .setRayTracer(new RayTracerBasic(scene));
+        XMLRendererBuilder builder = new XMLRendererBuilder("XML Test scene", "scene files\\basicRenderTestTwoColors.xml");
+        builder.buildRenderer();
+
+        Scene scene = builder.getScene();
+
+        Camera camera = new Camera(Point.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))
+               .setVPDistance(100)
+               .setVPSize(500, 500).setImageWriter(new ImageWriter("xml render test", 1000, 1000))
+               .setRayTracer(new RayTracerBasic(scene));
         camera.renderImage();
         camera.printGrid(100, new Color(YELLOW));
         camera.writeToImage();
-    } */
+    }
 
 }
