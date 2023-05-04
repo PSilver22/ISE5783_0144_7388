@@ -6,6 +6,8 @@ import primitives.Double3;
 /** Class containing the color (and intensity) of an ambient light
  */
 public class AmbientLight {
+    static final AmbientLight NONE = new AmbientLight(Color.BLACK, new Double3(0, 0, 0));
+
     private Color intensity;
     public AmbientLight() { intensity = Color.BLACK; }
 
