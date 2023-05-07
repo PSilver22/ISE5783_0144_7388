@@ -12,7 +12,7 @@ import java.util.List;
 /** Plane class represents two-dimensional plane in 3D Cartesian coordinate
  * system
  * @author Yossi Tyberg */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     //plane is represented by a point and the orthogonal vector
     private final Point q0;
     private final Vector normal; //vec
@@ -79,7 +79,7 @@ public class Plane implements Geometry {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         // if the base of the ray is on the reference point
         if (q0.equals(ray.getPoint())) return null;
 
@@ -93,7 +93,7 @@ public class Plane implements Geometry {
         double t = alignZero(nQMinusP0 / nv);
 
         // If the ray scales in the positive direction, return the found point
-        if (t > 0) return List.of(ray.getPoint(t));
+        if (t > 0) return List.of(new GeoPoint(this, ray.getPoint(t)));
 
         // Otherwise, return null
         return null;

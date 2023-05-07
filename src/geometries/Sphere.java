@@ -5,6 +5,7 @@ import primitives.Ray;
 import primitives.Vector;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static primitives.Double3.ZERO;
 import static primitives.Util.alignZero;
@@ -13,7 +14,7 @@ import static primitives.Util.alignZero;
  * system
  * @author: Yossi Tyberg
  */
-public class Sphere implements Geometry{
+public class Sphere extends Geometry {
     //center and radius of the sphere
     private final Point center;
     private final double radius;
@@ -41,7 +42,7 @@ public class Sphere implements Geometry{
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 
         //distance from base of ray to the point on the ray closest the sphere's center
         double tm;
@@ -72,13 +73,13 @@ public class Sphere implements Geometry{
         double t2 = alignZero(tm-th);
         //return a list of the intersection points in the direction of the ray - who are scaled positively
         if(t1 > 0 && t2 > 0)
-            {return List.of(ray.getPoint(t1), ray.getPoint(t2));}
+        {return Stream.of(ray.getPoint(t1), ray.getPoint(t2)).map(p -> new GeoPoint(this, p)).toList();}
         else if (t1 >0)
-            {return List.of(ray.getPoint(t1));}
+        {return List.of(new GeoPoint(this, ray.getPoint(t1)));}
         else if (t2 > 0)
-            {return List.of(ray.getPoint(t2));}
+        {return List.of(new GeoPoint(this, ray.getPoint(t2)));}
         else
-            {return null;}
+        {return null;}
     }
 
     @Override

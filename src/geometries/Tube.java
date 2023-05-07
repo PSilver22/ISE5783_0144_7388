@@ -11,7 +11,7 @@ import java.util.List;
  * system
  * @author: Yossi Tyberg
  */
-public class Tube implements Geometry{
+public class Tube extends Geometry {
     //the central ray and the radius of the tube
     protected final Ray ray;
     protected final double radius;
@@ -52,5 +52,5 @@ public class Tube implements Geometry{
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) { return null; }
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) { return null; }
 }

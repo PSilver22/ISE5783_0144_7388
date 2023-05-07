@@ -25,8 +25,8 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        // Get the intersections of the plane and check if it falls in the triangle
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+// Get the intersections of the plane and check if it falls in the triangle
         List<Point> intersectionList = plane.findIntersections(ray);
         if (intersectionList == null) return null;
 
@@ -59,7 +59,7 @@ public class Triangle extends Polygon {
             // The barycentric coordinates must add to 0
             if (!isZero(1 - (baryX + baryY + baryZ))) return null;
 
-            return intersectionList;
+            return intersectionList.stream().map(ip -> new GeoPoint(this, ip)).toList();
         } catch (IllegalArgumentException e) {
             return null;
         }

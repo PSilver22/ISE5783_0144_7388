@@ -6,7 +6,7 @@ import primitives.Ray;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     private List<Intersectable> shapes;
 
     /**
@@ -36,12 +36,12 @@ public class Geometries implements Intersectable {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> result = null;
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> result = null;
 
-        // Collect all the intersections of the shapes in the Geometries object and the ray
+        // Collect all the intersections of the shapes in the Geometries object
         for (Intersectable shape : shapes) {
-            List<Point> shapeIntersections = shape.findIntersections(ray);
+            List<GeoPoint> shapeIntersections = shape.findGeoIntersectionsHelper(ray);
 
             if (shapeIntersections == null) continue;
 

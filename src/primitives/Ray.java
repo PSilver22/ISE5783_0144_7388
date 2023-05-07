@@ -1,5 +1,8 @@
 package primitives;
 
+import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
+
 import java.util.List;
 
 /**
@@ -52,29 +55,31 @@ public class Ray {
 
     /**
      * Given a list of points, calculate the closest point to the head of the Ray.
-     * @throws NullPointerException If list of points is null
      * @param points List of points to search through
      * @return Point closest to head of the ray or null if the passed list is empty
      */
     public Point findClosestPoint (List<Point> points)
     {
-        if (points == null) throw new NullPointerException("The points list passed is null.");
+        return points == null || points.isEmpty() ? null:
+                findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+    }
 
+    /**
+     * Given a list of GeoPoints, calculate the closest point to the head of the Ray.
+     * @param points List of GeoPoints to search through
+     * @return Point closest to head of the ray or null if the passed list is empty
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
         Point head = p0.add(dir);
 
-        // Search for the point with the shortest distance
-        Point closest = null;
-        double closestDistance = -1;
-        for (Point p : points) {
-            double distance = head.distanceSquared(p);
-
-            if (closest == null || closestDistance > distance) {
-                closest = p;
-                closestDistance = distance;
+        return points.stream().reduce((min, gp) -> {
+            if (gp.point.distanceSquared(head) < min.point.distanceSquared(head)) {
+                return gp;
             }
-        }
-        return closest;
+            return min;
+        }).get();
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
