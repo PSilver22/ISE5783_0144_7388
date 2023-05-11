@@ -69,4 +69,6 @@ public abstract class Util {
 		return Math.random() * (max - min) + min;
 	}
 
+	public static double abs(double x) { return (x < 0) ? -x : x; }
+
 }

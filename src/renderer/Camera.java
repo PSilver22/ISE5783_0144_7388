@@ -133,6 +133,7 @@ public class Camera {
      */
     public Camera setRayTracer(RayTracerBase rayTracer) {
         this.rayTracer = rayTracer;
+        rayTracer.setCameraDirection(to);
 
         return this;
     }

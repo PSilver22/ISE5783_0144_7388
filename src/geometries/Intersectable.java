@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Vector;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,14 @@ public abstract class Intersectable {
         public GeoPoint(Geometry geometry, Point point) {
             this.geometry = geometry;
             this.point = point;
+        }
+
+        /**
+         * Gets the normal of the geometry from point
+         * @return
+         */
+        public Vector getNormal() {
+            return geometry.getNormal(point);
         }
 
         @Override
