@@ -1,6 +1,7 @@
 package scene;
 
 import elements.AmbientLight;
+import elements.LightSource;
 import geometries.Geometries;
 import geometries.Geometry;
 import primitives.Color;
@@ -23,6 +24,9 @@ public class Scene {
 
     // The composite of all 3D shapes in the scene
     public Geometries geometries = new Geometries();
+
+    //collection of all light sources in the scene
+    public List<LightSource> lights = new LinkedList<LightSource>();
 
     /**
      * Creates the Scene with all fields set to their default constructors
@@ -56,6 +60,11 @@ public class Scene {
 
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
+        return this;
+    }
+
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
         return this;
     }
 }
