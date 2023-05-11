@@ -1,4 +1,4 @@
-package elements;
+package lighting;
 
 import primitives.Color;
 import primitives.Point;
@@ -28,7 +28,7 @@ public class PointLight extends Light implements LightSource {
      * @param kC
      * @return The newly updated LightSource
      */
-    public PointLight setkC(double kC)
+    public PointLight setKc(double kC)
     {
         this.kC = kC;
         return this;
@@ -39,7 +39,7 @@ public class PointLight extends Light implements LightSource {
      * @param kL
      * @return The newly updated LightSource
      */
-    public PointLight setkL(double kL)
+    public PointLight setKl(double kL)
     {
         this.kL = kL;
         return this;
@@ -50,7 +50,7 @@ public class PointLight extends Light implements LightSource {
      * @param kQ
      * @return The newly updated LightSource
      */
-    public PointLight setkQ(double kQ)
+    public PointLight setKq(double kQ)
     {
         this.kQ = kQ;
         return this;

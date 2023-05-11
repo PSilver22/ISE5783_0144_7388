@@ -4,23 +4,28 @@ public class Material {
     public Double3 kD = Double3.ZERO,kS = Double3.ZERO;
     public int nShininess = 0;
 
-    public void setkD(Double3 kD) {
+    public Material setKd(Double3 kD) {
         this.kD = kD;
+        return this;
     }
 
-    public void setkD(double kD) {
+    public Material setKd(double kD) {
         this.kD = new Double3(kD);
+        return this;
     }
 
-    public void setkS(Double3 kS) {
+    public Material setKs(Double3 kS) {
         this.kS = kS;
+        return this;
     }
 
-    public void setkS(double kS) {
+    public Material setKs(double kS) {
         this.kS = new Double3(kS);
+        return this;
     }
 
-    public void setNShininess(int shininess) {
+    public Material setShininess(int shininess) {
         this.nShininess = shininess;
+        return this;
     }
 }

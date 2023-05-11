@@ -140,7 +140,7 @@ public class Camera {
     /**
      * Finds and sets the color of each pixel in the viewplane.
      */
-    public void renderImage() {
+    public ImageWriter renderImage() {
         if (getMissingResource() != null) {
             throw new MissingResourceException("The camera is object is not fully built.", "Camera", getMissingResource());
         }
@@ -152,6 +152,8 @@ public class Camera {
                 imageWriter.writePixel(col, row, rayTracer.traceRay(currRay));
             }
         }
+
+        return imageWriter;
     }
 
     /**

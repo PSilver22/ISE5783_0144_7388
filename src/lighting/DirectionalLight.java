@@ -1,4 +1,4 @@
-package elements;
+package lighting;
 
 import primitives.Color;
 import primitives.Point;
@@ -8,7 +8,6 @@ import primitives.Vector;
  * Light which is sitting at an "infinite distance" from the scene.
  */
 public class DirectionalLight extends Light implements LightSource {
-
     private Vector direction = null;
 
     /**
