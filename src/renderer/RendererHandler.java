@@ -1,6 +1,6 @@
 package renderer;
 
-import elements.AmbientLight;
+import lighting.AmbientLight;
 import geometries.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

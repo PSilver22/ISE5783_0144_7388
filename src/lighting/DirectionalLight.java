@@ -1,4 +1,4 @@
-package elements;
+package lighting;
 
 import primitives.Color;
 import primitives.Point;
@@ -11,23 +11,11 @@ public class DirectionalLight extends Light implements LightSource {
     private Vector direction = null;
 
     /**
-     * constructor for a new light of the passed color and intensity
-     *
-     * @param intensity
-     */
-    protected DirectionalLight(Color intensity, Vector direction) {
-        super(intensity);
-        this.direction = direction;
-public class DirectionalLight extends Light implements LightSource {
-
-    private Vector direction = null;
-
-    /**
      * constructor for a new directional light of the passed color and intensity
      * @param intensity intensity of color
      * @param direction direction of the light
      */
-    protected DirectionalLight(Color intensity, Vector direction) {
+    public DirectionalLight(Color intensity, Vector direction) {
         super(intensity);
         this.direction = direction.normalize();
     }
