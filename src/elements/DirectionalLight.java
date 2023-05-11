@@ -4,8 +4,10 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
-public class DrectionalLight extends Light implements LightSource {
-
+/**
+ * Light which is sitting at an "infinite distance" from the scene.
+ */
+public class DirectionalLight extends Light implements LightSource {
     private Vector direction = null;
 
     /**
@@ -13,7 +15,7 @@ public class DrectionalLight extends Light implements LightSource {
      *
      * @param intensity
      */
-    protected DrectionalLight(Color intensity, Vector direction) {
+    protected DirectionalLight(Color intensity, Vector direction) {
         super(intensity);
         this.direction = direction;
     }
