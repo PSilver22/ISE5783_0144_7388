@@ -96,7 +96,7 @@ public class LightsTests {
    public void sphereSpot() {
       scene1.geometries.add(sphere);
       scene1.lights.add(new SpotLight(sphereLightColor, sphereLightPosition, new Vector(1, 1, -0.5))
-         .setKl(0.001).setKq(0.0001));
+              .setKl(0.001).setKq(0.0001));
 
       ImageWriter imageWriter = new ImageWriter("lightSphereSpot", 500, 500);
       camera1.setImageWriter(imageWriter) //
@@ -148,7 +148,6 @@ public class LightsTests {
 
 
    /** Produce a picture of a sphere lighted by a narrow spotlight */
-   /*
    @Test
    public void sphereSpotSharp() {
       scene1.geometries.add(sphere);
@@ -161,16 +160,14 @@ public class LightsTests {
          .setRayTracer(new RayTracerBasic(scene1)) //
          .renderImage() //
          .writeToImage(); //
-   }*/
-
+   }
 
    /** Produce a picture of two triangles lighted by a narrow spotlight */
-   /*
    @Test
    public void trianglesSpotSharp() {
       scene2.geometries.add(triangle1, triangle2);
       scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition, trianglesLightDirection)
-         .setNarrowBeam(10).setKl(0.001).setKq(0.00004));
+              .setNarrowBeam(10).setKl(0.001).setKq(0.00004));
 
       ImageWriter imageWriter = new ImageWriter("lightTrianglesSpotSharp", 500, 500);
       camera2.setImageWriter(imageWriter) //
@@ -178,14 +175,14 @@ public class LightsTests {
          .renderImage() //
          .writeToImage(); //
    }
-*/
+
    /** Produce a picture of a sphere lit by multiple types of lights */
    @Test
    public void sphereMultiLight() {
       scene1.geometries.add(sphere);
       scene1.lights.addAll(List.of(new DirectionalLight(sphereLightColor, new Vector(-1, 1, -0.5)),
               new PointLight(sphereLightColor, new Point (50,-25,50))
-                  .setKl(0.001).setKq(0.0002),
+                      .setKl(0.001).setKq(0.0002),
               new SpotLight(sphereLightColor, new Point (50,50,-25), new Vector(1, -1, -0.5))
                   .setKl(0.001).setKq(0.0001)));
 
@@ -201,10 +198,10 @@ public class LightsTests {
    @Test
    public void trianglesMultiLight() {
       scene2.geometries.add(triangle1, triangle2);
-      scene2.lights.addAll(List.of(new DirectionalLight(trianglesLightColor, new Vector(-1, 1, -0.5)),
-              new PointLight(trianglesLightColor, new Point (50,-25,50))
-                      .setKl(0.001).setKq(0.0002), new SpotLight(trianglesLightColor,
-                      new Point (50,50,-25), new Vector(1, -1, -0.5))
+      scene2.lights.addAll(List.of(new DirectionalLight(new Color(100, 100, 100), new Vector(-1, 1, -0.5)),
+              new PointLight(new Color(1000, 0, 0), new Point (50,-25,50))
+                      .setKl(0.001).setKq(0.00005), new SpotLight(new Color(0, 500, 0),
+                      new Point (50,-50,-25), new Vector(-1, 0, -0.5))
                       .setKl(0.001).setKq(0.0001)));
 
       ImageWriter imageWriter = new ImageWriter("lightTrianglesMulti", 500, 500);

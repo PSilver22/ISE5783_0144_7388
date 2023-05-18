@@ -1,9 +1,6 @@
 package renderer;
 
-import primitives.Color;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.MissingResourceException;
 
@@ -173,6 +170,106 @@ public class Camera {
                 }
             }
         }
+    }
+
+    /**
+     * Applies a transformation on the camera's direction vectors
+     * @param transformation The matrix describing the transformation (relative to the standard basis)
+     * @return The newly updated camera
+     */
+    private Camera applyTransformation(Matrix33 transformation) {
+        Matrix33 stdToCam = new Matrix33(to, up, right);
+        Matrix33 basisTransformation = stdToCam.multiply(transformation.multiply(stdToCam.inverse()));
+
+        to = basisTransformation.multiply(to);
+        up = basisTransformation.multiply(up);
+        right = basisTransformation.multiply(right);
+
+        return this;
+    }
+
+    /**
+     * Rotates the camera clockwise relative to the to vector
+     * @param degrees Amount to rotate in degrees
+     * @return The newly updated camera
+     */
+    public Camera rotateTo(double degrees) {
+        double rads = degrees * (Math.PI / 180);
+
+        return applyTransformation(
+                new Matrix33(
+                    1, 0, 0,
+                    0, Math.cos(rads), -Math.sin(rads),
+                    0, Math.sin(rads), Math.cos(rads)));
+    }
+
+    /**
+     * Rotates the camera clockwise relative to the up vector
+     * @param degrees Amount to rotate in degrees
+     * @return The newly updated camera
+     */
+    public Camera rotateUp(double degrees) {
+        double rads = degrees * (Math.PI / 180);
+
+        return applyTransformation(
+                new Matrix33(
+                        Math.cos(rads), 0, -Math.sin(rads),
+                        0, 1, 0,
+                        Math.sin(rads), 0, Math.cos(rads)));
+    }
+
+    /**
+     * Rotates the camera clockwise relative to the right vector
+     * @param degrees Amount to rotate in degrees
+     * @return The newly updated camera
+     */
+    public Camera rotateRight(double degrees) {
+        double rads = degrees * (Math.PI / 180);
+
+        return applyTransformation(
+                new Matrix33 (
+                        Math.cos(rads), -Math.sin(rads), 0,
+                        Math.sin(rads), Math.cos(rads), 0,
+                        0, 0, 1));
+    }
+
+    /**
+     * Moves the camera
+     * @param amount The distance for the camera to move
+     * @param dir A unit vector with the direction the camera should move
+     * @return The newly updated camera
+     */
+    private Camera move(double amount, Vector dir) {
+        location = location.add(dir.scale(amount));
+
+        return this;
+    }
+
+    /**
+     * Move the camera in the to direction
+     * @param amount Amount to move the camera
+     * @return The newly updated camera
+     */
+    public Camera moveForward(double amount) {
+        return move(amount, to);
+    }
+
+    /**
+     * Move the camera in the right direction
+     * @param amount Amount to move the camera
+     * @return The newly updated camera
+     */
+    public Camera moveRight(double amount) {
+        return move(amount, right);
+    }
+
+    /**
+     * Move the camera in the up direction
+     * @param amount Amount to move the camera
+     * @return The newly updated camera
+     */
+    public Camera moveUp(double amount) {
+        return move(amount, up);
     }
 
     /**
