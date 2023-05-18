@@ -34,7 +34,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param p
      * @return
      */
-    private Color calcShininess(LightSource l, GeoPoint p) {
+    private Color calcSpecularLight(LightSource l, GeoPoint p) {
         if (vTo == null) throw new MissingResourceException("ERROR: Ray tracer doesn't know the direction of the camera in the scene.", "RayTracer", "vTo");
         Material mat = p.geometry.getMaterial();
 
@@ -50,16 +50,6 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * Helper function which calculates the full color contribution of the lightsource at a point
-     * @param l
-     * @param p
-     * @return
-     */
-    private Color calcLightColor(LightSource l, GeoPoint p) {
-         return calcDiffusedLight(l, p).add(calcShininess(l, p)).scale(l.getIntensity(p.point));
-    }
-
-    /**
      * Helper function which calculates the color contribution of all lights on the point p
      * @param p
      * @return
@@ -69,7 +59,7 @@ public class RayTracerBasic extends RayTracerBase {
         for (LightSource l : scene.lights) {
             // THIS SHOULD BE THE OPPOSITE
             if (!Util.checkSign(l.getL(p.point).dotProduct(p.getNormal()), vTo.dotProduct(p.getNormal()))) continue;
-            sum = sum.add(calcLightColor(l, p));
+            sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p)).scale(l.getIntensity(p.point)));
         }
 
         return sum;

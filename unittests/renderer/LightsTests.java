@@ -180,7 +180,7 @@ public class LightsTests {
    @Test
    public void sphereMultiLight() {
       scene1.geometries.add(sphere);
-      scene1.lights.addAll(List.of(new DirectionalLight(sphereLightColor, new Vector(-1, 1, -0.5)),
+      scene1.lights.addAll(List.of(new DirectionalLight(sphereLightColor, new Vector(1, 1, 0.5)),
               new PointLight(sphereLightColor, new Point (50,-25,50))
                       .setKl(0.001).setKq(0.0002),
               new SpotLight(sphereLightColor, new Point (50,50,-25), new Vector(1, -1, -0.5))
@@ -198,10 +198,10 @@ public class LightsTests {
    @Test
    public void trianglesMultiLight() {
       scene2.geometries.add(triangle1, triangle2);
-      scene2.lights.addAll(List.of(new DirectionalLight(new Color(100, 100, 100), new Vector(-1, 1, -0.5)),
-              new PointLight(new Color(1000, 0, 0), new Point (50,-25,50))
-                      .setKl(0.001).setKq(0.00005), new SpotLight(new Color(0, 500, 0),
-                      new Point (50,-50,-25), new Vector(-1, 0, -0.5))
+      scene2.lights.addAll(List.of(new DirectionalLight(new Color(0, 0, 1000), new Vector(1, 1, -0.5)),
+              new PointLight(new Color(2000, 0, 0), new Point (50,0,50))
+                      .setKl(0.001).setKq(0.0001), new SpotLight(new Color(0, 500, 0),
+                      new Point (-50,-50,-25), new Vector(-1, 0, -0.5))
                       .setKl(0.001).setKq(0.0001)));
 
       ImageWriter imageWriter = new ImageWriter("lightTrianglesMulti", 500, 500);

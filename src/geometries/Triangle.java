@@ -27,11 +27,13 @@ public class Triangle extends Polygon {
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 // Get the intersections of the plane and check if it falls in the triangle
-        List<Point> intersectionList = plane.findIntersections(ray);
+        List<GeoPoint> intersectionList = plane.findGeoIntersections(ray);
         if (intersectionList == null) return null;
 
-        Point p = intersectionList.get(0);
+        GeoPoint gp = intersectionList.get(0);
+        gp.geometry = this;
 
+        Point p = gp.point;
         Vector normal = plane.getNormal();
 
         // Get the points of the triangle vertices
@@ -59,7 +61,7 @@ public class Triangle extends Polygon {
             // The barycentric coordinates must add to 0
             if (!isZero(1 - (baryX + baryY + baryZ))) return null;
 
-            return intersectionList.stream().map(ip -> new GeoPoint(this, ip)).toList();
+            return intersectionList;
         } catch (IllegalArgumentException e) {
             return null;
         }
