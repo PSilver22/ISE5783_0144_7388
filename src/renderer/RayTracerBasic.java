@@ -57,9 +57,12 @@ public class RayTracerBasic extends RayTracerBase {
     private Color calcAllLightColor(GeoPoint p) {
         Color sum = Color.BLACK;
         for (LightSource l : scene.lights) {
-            // THIS SHOULD BE THE OPPOSITE
-            if (!Util.checkSign(l.getL(p.point).dotProduct(p.getNormal()), vTo.dotProduct(p.getNormal()))) continue;
-            sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p)).scale(l.getIntensity(p.point)));
+            Vector pNormal = p.getNormal();
+            double nl = l.getL(p.point).dotProduct(p.getNormal());
+            double nv = vTo.dotProduct(p.getNormal());
+
+            if (Util.checkSign(nl, nv))
+                sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p)).scale(l.getIntensity(p.point)));
         }
 
         return sum;
