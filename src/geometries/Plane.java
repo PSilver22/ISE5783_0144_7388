@@ -79,7 +79,7 @@ public class Plane extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDist) {
         // if the base of the ray is on the reference point
         if (q0.equals(ray.getPoint())) return null;
 
@@ -92,8 +92,8 @@ public class Plane extends Geometry {
 
         double t = alignZero(nQMinusP0 / nv);
 
-        // If the ray scales in the positive direction, return the found point
-        if (t > 0) return List.of(new GeoPoint(this, ray.getPoint(t)));
+        // If the ray scales in the positive direction and is within the max distance, return the found point
+        if (t > 0 && alignZero(t - maxDist) <= 0) return List.of(new GeoPoint(this, ray.getPoint(t)));
 
         // Otherwise, return null
         return null;

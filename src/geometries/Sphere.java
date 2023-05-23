@@ -42,7 +42,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDist) {
 
         //distance from base of ray to the point on the ray closest the sphere's center
         double tm;
@@ -72,11 +72,12 @@ public class Sphere extends Geometry {
         double t1 = alignZero(tm+th);
         double t2 = alignZero(tm-th);
         //return a list of the intersection points in the direction of the ray - who are scaled positively
-        if(t1 > 0 && t2 > 0)
+        //and are within the max distance
+        if(t1 > 0 && alignZero(t1-maxDist)<=0 && t2 > 0 && alignZero(t2-maxDist)<=0)
         {return Stream.of(ray.getPoint(t1), ray.getPoint(t2)).map(p -> new GeoPoint(this, p)).toList();}
-        else if (t1 >0)
+        else if (t1 >0 && alignZero(t1-maxDist)<=0)
         {return List.of(new GeoPoint(this, ray.getPoint(t1)));}
-        else if (t2 > 0)
+        else if (t2 > 0 && alignZero(t2-maxDist)<=0)
         {return List.of(new GeoPoint(this, ray.getPoint(t2)));}
         else
         {return null;}

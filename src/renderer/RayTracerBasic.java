@@ -57,9 +57,16 @@ public class RayTracerBasic extends RayTracerBase {
     private Color calcAllLightColor(GeoPoint p) {
         Color sum = Color.BLACK;
         for (LightSource l : scene.lights) {
+
+            Vector L = l.getL(p.point);
+            Vector n = p.getNormal();
+            double nl = n.dotProduct(L);
             // THIS SHOULD BE THE OPPOSITE
             if (!Util.checkSign(l.getL(p.point).dotProduct(p.getNormal()), vTo.dotProduct(p.getNormal()))) continue;
-            sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p)).scale(l.getIntensity(p.point)));
+            if (unshaded(L,n,p,l,nl))
+            {
+                sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p)).scale(l.getIntensity(p.point)));
+            }
         }
 
         return sum;
@@ -87,14 +94,15 @@ public class RayTracerBasic extends RayTracerBase {
      * @param gp point on geometry
      * @return
      */
-    private boolean unshaded(Vector l, Vector n, GeoPoint gp, double nl)
+    private boolean unshaded(Vector l, Vector n, GeoPoint gp, LightSource light, double nl)
     {
         Vector lightDirection = l.scale(-1); // from point to light source
-        Vector epsVector = n.scale(nl < 0 ? DELTA : -DELTA);
-        Point point = gp.point.add(epsVector);
-        Ray lightRay = new Ray(point, lightDirection);
-        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
-        return intersections.isEmpty();
+        Vector deltaVector = n.scale(nl < 0 ? DELTA : -DELTA); // the normal scaled by DELTA towards the light
+        Point point = gp.point.add(deltaVector); //point arrived at by moving along deltavector from intersection
+        Ray lightRay = new Ray(point, lightDirection); //a ray from point in direction of the light
+        //if there are no interections between point and the light then the point is unshadowed
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(gp.point));
+        return intersections == null;
     }
     @Override
     public Color traceRay(Ray ray) {
