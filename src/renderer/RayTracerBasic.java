@@ -55,7 +55,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @return
      */
     private Color calcAllLightColor(GeoPoint p) {
-        Color sum = Color.BLACK;
+        Color sum = p.geometry.getEmission();
         for (LightSource l : scene.lights) {
 
             Vector L = l.getL(p.point);
