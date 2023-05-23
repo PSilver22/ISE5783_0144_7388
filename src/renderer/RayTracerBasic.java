@@ -77,7 +77,25 @@ public class RayTracerBasic extends RayTracerBase {
                 .add(p.geometry.getEmission())
                 .add(calcAllLightColor(p));
     }
+    //amount to move the ray’s head when creating shadow rays
+    private static final double DELTA = 0.1;
 
+    /**
+     * check whether point is in shadow
+     * @param l vector from light to geometry
+     * @param n normal vector of geometry
+     * @param gp point on geometry
+     * @return
+     */
+    private boolean unshaded(Vector l, Vector n, GeoPoint gp, double nl)
+    {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector epsVector = n.scale(nl < 0 ? DELTA : -DELTA);
+        Point point = gp.point.add(epsVector);
+        Ray lightRay = new Ray(point, lightDirection);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+        return intersections.isEmpty();
+    }
     @Override
     public Color traceRay(Ray ray) {
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
