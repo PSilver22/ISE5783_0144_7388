@@ -6,10 +6,7 @@ import geometries.Triangle;
 import lighting.AmbientLight;
 import lighting.SpotLight;
 import org.junit.jupiter.api.Test;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
 import scene.Scene;
 
 import static java.awt.Color.BLUE;
@@ -87,10 +84,10 @@ public class ShadowTests {
     }
 
     /** Produce a picture of a two triangles lighted by a spot light with a Sphere
-     * producing a shading *//**
+     * producing a shading */
     @Test
     public void trianglesSphere() {
-        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
 
         scene.geometries.add( //
                 new Triangle(new Point(-150, -150, -115), new Point(150, -150, -135),
@@ -110,6 +107,6 @@ public class ShadowTests {
                 .renderImage() //
                 .writeToImage();
     }
-     **/
+
 
 }
