@@ -25,9 +25,9 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDist) {
 // Get the intersections of the plane and check if it falls in the triangle
-        List<GeoPoint> intersectionList = plane.findGeoIntersections(ray);
+        List<GeoPoint> intersectionList = plane.findGeoIntersections(ray, maxDist);
         if (intersectionList == null) return null;
 
         GeoPoint gp = intersectionList.get(0);
