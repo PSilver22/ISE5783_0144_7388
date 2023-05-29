@@ -1,9 +1,7 @@
 package renderer;
 
 import primitives.Color;
-import primitives.Point;
 import primitives.Ray;
-import primitives.Vector;
 import scene.Scene;
 
 /**
@@ -11,7 +9,6 @@ import scene.Scene;
  */
 public abstract class RayTracerBase {
     protected Scene scene;
-    protected Vector vTo;
 
     /**
      * Set the scene for the ray tracer
@@ -27,15 +24,4 @@ public abstract class RayTracerBase {
      * @return Color from information gathered by the ray
      */
     public abstract Color traceRay(Ray ray);
-
-    /**
-     * Tells the raytracer what direction the camera is facing
-     * @param vTo
-     * @return The newly updated RayTracerBase
-     */
-    public RayTracerBase setCameraDirection(Vector vTo) {
-        this.vTo = vTo;
-        return this;
-    }
-
 }

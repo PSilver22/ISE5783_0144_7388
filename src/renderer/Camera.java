@@ -130,7 +130,6 @@ public class Camera {
      */
     public Camera setRayTracer(RayTracerBase rayTracer) {
         this.rayTracer = rayTracer;
-        rayTracer.setCameraDirection(to);
 
         return this;
     }
@@ -150,7 +149,6 @@ public class Camera {
                 imageWriter.writePixel(col, row, rayTracer.traceRay(currRay));
             }
         }
-
         return imageWriter;
     }
 

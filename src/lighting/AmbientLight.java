@@ -18,4 +18,5 @@ public class AmbientLight extends Light{
         super(color.scale(attenuation));
     }
 
+    public AmbientLight(Color color, double attenuation) { super(color.scale(attenuation)); }
 }

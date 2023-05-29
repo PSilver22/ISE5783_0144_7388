@@ -1,6 +1,5 @@
 package primitives;
 
-import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
 
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.List;
  * @author Pinny Silver
  */
 public class Ray {
+    private static final double DELTA = 0.1;
+
     /** Base of the ray */
     final Point p0;
 
@@ -24,6 +25,10 @@ public class Ray {
     public Ray(Point base, Vector dir) {
         this.p0 = base;
         this.dir = dir.normalize();
+    }
+
+    public Ray(Point base, Vector dir, Vector normal) {
+        this(base.add(normal.scale(DELTA)), dir);
     }
 
     /**
@@ -70,10 +75,8 @@ public class Ray {
      * @return Point closest to head of the ray or null if the passed list is empty
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
-        Point head = p0.add(dir);
-
         return points.stream().reduce((min, gp) -> {
-            if (gp.point.distanceSquared(head) < min.point.distanceSquared(head)) {
+            if (gp.point.distanceSquared(p0) < min.point.distanceSquared(p0)) {
                 return gp;
             }
             return min;

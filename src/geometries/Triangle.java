@@ -7,7 +7,7 @@ import primitives.Vector;
 
 import java.util.List;
 
-import static primitives.Util.isZero;
+import primitives.Util;
 
 /** Triangle class represents two-dimensional triangle in 3D Cartesian coordinate
  * system
@@ -49,9 +49,9 @@ public class Triangle extends Polygon {
             double areaSub3 = normal.dotProduct(new Vector(v1.subtract(p)).crossProduct(new Vector(v2.subtract(p))));
 
             // The barycentric x, y, and z coordinates will be the ratio of sub-triangle area to the whole triangle area
-            double baryX = areaSub1 / areaTriangle;
-            double baryY = areaSub2 / areaTriangle;
-            double baryZ = areaSub3 / areaTriangle;
+            double baryX = Util.alignZero(areaSub1 / areaTriangle);
+            double baryY = Util.alignZero(areaSub2 / areaTriangle);
+            double baryZ = Util.alignZero(areaSub3 / areaTriangle);
 
             // If any of the coordinates are not within the triangle, return null
             if (baryX <= 0 || baryX > 1) return null;
@@ -59,7 +59,7 @@ public class Triangle extends Polygon {
             if (baryZ <= 0 || baryZ > 1) return null;
 
             // The barycentric coordinates must add to 0
-            if (!isZero(1 - (baryX + baryY + baryZ))) return null;
+            if (!Util.isZero(1 - (baryX + baryY + baryZ))) return null;
 
             return intersectionList;
         } catch (IllegalArgumentException e) {

@@ -35,12 +35,6 @@ public class SpotLight extends PointLight {
 
     @Override
     public Color getIntensity(Point p) {
-        //double angle = Math.acos(direction.dotProduct(getL(p)));
-        //if (angle > radians) { return super.getIntensity(p).scale(0); }
-
-        //double freq = Math.PI / (2 * radians);
-
-        //return super.getIntensity(p).scale(Math.max(0, Math.cos(freq * angle)));
-        return super.getIntensity().scale(Math.pow(Math.max(0, direction.dotProduct(getL(p))), scale));
+        return super.getIntensity(p).scale(Math.pow(Math.max(0, direction.dotProduct(getL(p))), scale));
     }
 }
