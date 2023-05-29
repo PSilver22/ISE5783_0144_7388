@@ -71,7 +71,7 @@ public class ShadowTests {
     Vector dir = new Vector (1,1,-3);
         sphereTriangleHelper("shadowSphereTriangleSpot1", //
                 new Triangle(new Point(-70, -40, 0), new Point(-40, -70, 0), new Point(-68, -68, -4)), //
-                new Point(-100, -100, 200).add(dir.scale(15)));
+                new Point(-100, -100, 200).add(dir.scale(-175)));
     }
 
     /** Sphere-Triangle shading - move spot even more close */
@@ -80,7 +80,7 @@ public class ShadowTests {
         Vector dir = new Vector (1,1,-3);
         sphereTriangleHelper("shadowSphereTriangleSpot2", //
                 new Triangle(new Point(-70, -40, 0), new Point(-40, -70, 0), new Point(-68, -68, -4)), //
-                new Point(-100, -100, 200).add(dir.scale(75)));
+                new Point(-100, -100, 200).add(dir.scale(20)));
     }
 
     /** Produce a picture of a two triangles lighted by a spot light with a Sphere
