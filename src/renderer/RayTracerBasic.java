@@ -57,7 +57,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param cameraRay The ray from the camera
      * @return
      */
-    private Color calcLocalEffects(GeoPoint p, Ray cameraRay) {
+    private Color calcLocalEffects(GeoPoint p, Ray cameraRay, Double3 kx) {
         Color sum = p.geometry.getEmission();
         for (LightSource l : scene.lights) {
 
@@ -67,9 +67,11 @@ public class RayTracerBasic extends RayTracerBase {
             double nl = Util.alignZero(n.dotProduct(L));
 
             if (!Util.checkSign(l.getL(p.point).dotProduct(p.getNormal()), cameraRay.getVector().dotProduct(p.getNormal()))) continue;
-            if (unshaded(L,n,p,l,nl))
+            Double3 ktr = transparency(L,n,p,l,nl);
+            ktr = ktr.product(kx);
+            if (!ktr.lowerThan(MIN_CALC_COLOR_K))
             {
-                sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p, cameraRay)).scale(l.getIntensity(p.point)));
+                sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p, cameraRay))).scale((l.getIntensity(p.point).scale(ktr)));
             }
         }
 
@@ -181,7 +183,7 @@ public class RayTracerBasic extends RayTracerBase {
     private Color calcColor(GeoPoint gp, Ray ray, int level, Double3 kx) {
         if (gp == null) return scene.background;
 
-        Color color = calcLocalEffects(gp, ray);
+        Color color = calcLocalEffects(gp, ray, kx);
 
         return (1 == level) ? color : color.add(calcGlobalEffects(gp, ray, level, kx));
     }
@@ -195,19 +197,22 @@ public class RayTracerBasic extends RayTracerBase {
      * @param nl Dot product of n and l
      * @return
      */
-    private boolean unshaded(Vector l, Vector n, GeoPoint gp, LightSource light, double nl)
+    private Double3 transparency(Vector l, Vector n, GeoPoint gp, LightSource light, double nl)
     {
         Vector lightDirection = l.scale(-1); // from point to light source
         Vector normal = n.scale(nl < 0 ? 1 : -1); // the normal scaled by DELTA towards the light
 
         Ray lightRay = new Ray(gp.point, lightDirection, normal); //a ray from point in direction of the light
 
-        //if there are no interections between point and the light then the point is unshadowed
+        //if there are no intersections between point and the light then the point is unshadowed
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(gp.point));
-        if (intersections == null) return true;
-
-        return intersections.stream()
-                .noneMatch(intersectPoint -> intersectPoint.geometry.getMaterial().kT == Double3.ZERO);
+        if (intersections == null) return Double3.ONE;
+        Double3 ktr = Double3.ONE;
+        for (GeoPoint intersectPoint : intersections)
+        {
+            ktr = ktr.product(intersectPoint.geometry.getMaterial().kT);
+        }
+        return ktr;
     }
     @Override
     public Color traceRay(Ray ray) {
