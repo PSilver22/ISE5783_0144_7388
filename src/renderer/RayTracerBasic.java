@@ -71,7 +71,10 @@ public class RayTracerBasic extends RayTracerBase {
             ktr = ktr.product(kx);
             if (!ktr.lowerThan(MIN_CALC_COLOR_K))
             {
-                sum = sum.add(calcDiffusedLight(l, p).add(calcSpecularLight(l, p, cameraRay))).scale((l.getIntensity(p.point).scale(ktr)));
+                sum = sum
+                        .add(calcDiffusedLight(l, p)
+                            .add(calcSpecularLight(l, p, cameraRay))
+                            .scale(l.getIntensity(p.point).scale(ktr)));
             }
         }
 
@@ -206,6 +209,7 @@ public class RayTracerBasic extends RayTracerBase {
 
         //if there are no intersections between point and the light then the point is unshadowed
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, light.getDistance(gp.point));
+
         if (intersections == null) return Double3.ONE;
         Double3 ktr = Double3.ONE;
         for (GeoPoint intersectPoint : intersections)
