@@ -2,6 +2,9 @@ package renderer;
 
 import static java.awt.Color.*;
 
+import geometries.Plane;
+import lighting.DirectionalLight;
+import lighting.PointLight;
 import org.junit.jupiter.api.Test;
 
 import geometries.Sphere;
@@ -100,5 +103,47 @@ public class ReflectionRefractionTests {
          .setRayTracer(new RayTracerBasic(scene)) //
          .renderImage() //
          .writeToImage();
+   }
+
+   @Test
+   public void newEffects() {
+      Camera camera = new Camera(new Point(0, 1000, 2000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+              .setVPSize(200, 200).setVPDistance(1000);
+
+      camera.rotateRight(25);
+
+      scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+
+      scene.geometries.add(
+              new Plane(new Point(0,-70,0), new Vector(0,1,0)).setEmission(new Color(BLUE).scale(.25))
+                      .setMaterial((new Material().setKd(.75))),
+              new Plane(new Point(0,0,-120), new Vector(0,0.2,1))
+                      .setMaterial(new Material().setShininess(40).setKs(1).setKr(0.8))
+                      .setEmission(new Color(BLUE).scale(0.1)),
+              new Sphere(new Point(0, 50,130), 25).setEmission(new Color(PINK).scale(0.3))
+                      .setMaterial(new Material().setKs(0.2).setKd(0.2).setShininess(30)),
+              new Sphere(new Point(-120, 0, 0), 15).setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setKs(0.2).setKd(0.2).setShininess(30).setKt(0.6))
+              /*new Sphere(new Point(60, 50, 200), 30d).setEmission(new Color(BLUE)) //
+                      .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+              new Triangle(new Point(-15,185,310), new Point(15,185,290), new Point(0,210,300)).setEmission(new Color(WHITE))
+                      .setMaterial(new Material().setKs(0.8).setKr(1).setKt(0.1))*/);
+
+
+
+
+      scene.lights.add(new PointLight(new Color(200, 350, 405), new Point(210, 250, 0)));
+      scene.lights.add(new PointLight(new Color(200, 350, 405), new Point(-120, 0, 0)));
+             /* .setKl(4E-5).setKq(2E-7));
+      scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1)) //
+              .setKl(4E-5).setKq(2E-7));*/
+
+
+
+      ImageWriter imageWriter = new ImageWriter("newEffects", 600, 600);
+      camera.setImageWriter(imageWriter) //
+              .setRayTracer(new RayTracerBasic(scene)) //
+              .renderImage() //
+              .writeToImage();
    }
 }
