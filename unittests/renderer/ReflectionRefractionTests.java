@@ -115,15 +115,15 @@ public class ReflectionRefractionTests {
       scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
       //camera.rotateRight(1);
       scene.geometries.add(
-              new Plane(new Point(0,0,320), new Vector(.1,0,1)).setEmission(new Color(BLACK))
-                      .setMaterial(new Material().setKd(.1).setKr(1)),
-              /*new Plane(new Point(0,0,-100), new Vector(0,-3,1))
-                      .setMaterial(new Material().setKt(1).setKr(1)),*/
-              new Plane(new Point(0,-70,600), new Vector(0,1,0)).setEmission(new Color(BLUE).scale(.25))
-                      .setMaterial(new Material().setKd(.75)),
+              //back
+              new Plane(new Point(0,0,320), new Vector(.1,0,1)).setEmission(new Color(BLUE).scale(.08))
+                      .setMaterial(new Material().setKd(.01).setKr(1)),
+              //floor
+              new Plane(new Point(0,-70,600), new Vector(0,1,0)).setEmission(new Color(CYAN).scale(.25))
+                      .setMaterial(new Material().setKd(.8).setShininess(10)),
               //geometries floating on the right - sphere flanked by triangles with slightly different
               //transparencies intercepting red and yellow spotlights respectively
-              new Sphere(new Point(60, 50,730), 25).setEmission(new Color(BLUE).scale(0.3))
+              new Sphere(new Point(60, 50,730), 25).setEmission(new Color(BLUE).scale(1))
                       .setMaterial(new Material().setKs(0.3).setKd(0.3).setShininess(30)),
               new Triangle(new Point(25,70,730), new Point(20, 20,690), new Point(30,20,770))
                       .setMaterial(new Material().setKt(.9).setKd(.1).setKs(.3).setShininess(10)),
@@ -141,8 +141,8 @@ public class ReflectionRefractionTests {
                       .setMaterial(new Material().setKs(0.2).setKd(0.2).setShininess(30)),
               //base triangle
               new Triangle(new Point(-90,-15,960), new Point(-140,-35,1050), new Point(-50,-35,1050))
-                      .setMaterial(new Material().setKs(0.5).setKd(0.5))
-                      .setEmission(new Color(WHITE).scale(.4)),
+                      .setMaterial(new Material().setKs(0.01).setKd(.05))
+                      .setEmission(new Color(211,211,211)),
               //background (for transparent shadows)
               new Triangle(new Point(-500,-10,970), new Point(-70,500,970), new Point(-70,-100,970))
                       .setMaterial(new Material().setKs(0.5).setKd(0.5).setKr(.4))
@@ -156,11 +156,13 @@ public class ReflectionRefractionTests {
 
 
 
-      scene.lights.add(new DirectionalLight(new Color(10,10,10), new Vector(1,-10,-3)));
+      scene.lights.add(new DirectionalLight(new Color(BLUE).scale(.2), new Vector(1,-10,-3)));
       //spotlights for floating geometries
-      scene.lights.add(new SpotLight(new Color(YELLOW).scale(2), new Point(440, 50, 690), new Vector(-1, 0, .1)) //
+      scene.lights.add(new SpotLight(new Color(YELLOW).scale(4), new Point(440, 50, 690), new Vector(-1, 0, .1)) //
               .setKl(4E-5).setKq(2E-7));
-      scene.lights.add(new SpotLight(new Color(RED).scale(3), new Point(-440, 50, 770), new Vector(1, 0, .1)) //
+      scene.lights.add(new SpotLight(new Color(RED).scale(4), new Point(-440, 50, 770), new Vector(1, 0, .1)) //
+              .setKl(4E-5).setKq(2E-7));
+      scene.lights.add(new SpotLight(new Color(CYAN).scale(3), new Point(50, 55, 675), new Vector(0, 0, 1)) //
               .setKl(4E-5).setKq(2E-7));
       //spotlight for matroshka sphere
       scene.lights.add(new SpotLight(new Color(400, 400, 400).scale(.6), new Point(-90, -20, 1020), new Vector(0, 1, -1)) //
