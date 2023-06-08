@@ -50,7 +50,6 @@ public class DOFRayTracer implements RayTracer {
 
         for (Point base : rayBases) {
             sum = sum.add(rt.traceRay(new Ray(base, focalPlaneIntersect.subtract(base))));
-
         }
 
         return sum.reduce(rayBases.size() + 1);
