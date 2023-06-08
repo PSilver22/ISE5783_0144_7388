@@ -116,7 +116,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param r
      * @return
      */
-    private GeoPoint findClosestIntersection(Ray r) {
+    protected GeoPoint findClosestIntersection(Ray r) {
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(r);
         if (intersections == null) return null;
 
@@ -218,6 +218,7 @@ public class RayTracerBasic extends RayTracerBase {
         }
         return ktr;
     }
+
     @Override
     public Color traceRay(Ray ray) {
         return calcColor(findClosestIntersection(ray), ray);

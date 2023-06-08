@@ -7,7 +7,7 @@ import scene.Scene;
 /**
  * The base class for a ray tracer
  */
-public abstract class RayTracerBase {
+public abstract class RayTracerBase implements RayTracer {
     protected Scene scene;
 
     /**
@@ -17,11 +17,4 @@ public abstract class RayTracerBase {
     public RayTracerBase(Scene scene) {
         this.scene = scene;
     }
-
-    /**
-     * Shoots a ray and calculates the color based on the scene.
-     * @param ray
-     * @return Color from information gathered by the ray
-     */
-    public abstract Color traceRay(Ray ray);
 }

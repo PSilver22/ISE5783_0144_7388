@@ -17,10 +17,12 @@ public class Camera {
     private Vector to, up, right;
 
     // The shape and distance from the camera of the view plane
-    private double vpWidth = 0, vpHeight = 0, vpDistance = 0;
+    private double vpWidth = 0;
+    private double vpHeight = 0;
+    private double vpDistance = 0;
 
     private ImageWriter imageWriter;
-    private RayTracerBase rayTracer;
+    private RayTracer rayTracer;
 
     /**
      * Creates an instance of a camera
@@ -36,6 +38,34 @@ public class Camera {
         this.to = to.normalize();
         this.up = up.normalize();
         this.right = to.crossProduct(up).normalize();
+    }
+
+    public Point getLocation() {
+        return location;
+    }
+
+    public Vector getTo() {
+        return to;
+    }
+
+    public Vector getUp() {
+        return up;
+    }
+
+    public Vector getRight() {
+        return right;
+    }
+
+    public double getVpWidth() {
+        return vpWidth;
+    }
+
+    public double getVpHeight() {
+        return vpHeight;
+    }
+
+    public double getVpDistance() {
+        return vpDistance;
     }
 
     protected String getMissingResource() {
@@ -128,7 +158,7 @@ public class Camera {
      * @param rayTracer
      * @return The instance of the (now modified) camera.
      */
-    public Camera setRayTracer(RayTracerBase rayTracer) {
+    public Camera setRayTracer(RayTracer rayTracer) {
         this.rayTracer = rayTracer;
 
         return this;
@@ -171,22 +201,6 @@ public class Camera {
     }
 
     /**
-     * Applies a transformation on the camera's direction vectors
-     * @param transformation The matrix describing the transformation (relative to the standard basis)
-     * @return The newly updated camera
-     */
-    private Camera applyTransformation(Matrix33 transformation) {
-        Matrix33 stdToCam = new Matrix33(to, up, right);
-        Matrix33 basisTransformation = stdToCam.multiply(transformation.multiply(stdToCam.inverse()));
-
-        to = basisTransformation.multiply(to);
-        up = basisTransformation.multiply(up);
-        right = basisTransformation.multiply(right);
-
-        return this;
-    }
-
-    /**
      * Rotates the camera clockwise relative to the to vector
      * @param degrees Amount to rotate in degrees
      * @return The newly updated camera
@@ -194,11 +208,14 @@ public class Camera {
     public Camera rotateTo(double degrees) {
         double rads = degrees * (Math.PI / 180);
 
-        return applyTransformation(
-                new Matrix33(
-                    1, 0, 0,
-                    0, Math.cos(rads), -Math.sin(rads),
-                    0, Math.sin(rads), Math.cos(rads)));
+        Matrix33 camRotation = TransformationFactory.stdToBasis(to, up, right)
+                .multiply(TransformationFactory.xRotation(rads))
+                .multiply(TransformationFactory.basisToStd(to, up, right));
+
+        up = camRotation.multiply(up);
+        right = camRotation.multiply(right);
+
+        return this;
     }
 
     /**
@@ -209,11 +226,14 @@ public class Camera {
     public Camera rotateUp(double degrees) {
         double rads = degrees * (Math.PI / 180);
 
-        return applyTransformation(
-                new Matrix33(
-                        Math.cos(rads), 0, -Math.sin(rads),
-                        0, 1, 0,
-                        Math.sin(rads), 0, Math.cos(rads)));
+        Matrix33 camRotation = TransformationFactory.stdToBasis(to, up, right)
+                .multiply(TransformationFactory.zRotation(rads))
+                .multiply(TransformationFactory.basisToStd(to, up, right));
+
+        to = camRotation.multiply(to);
+        up = camRotation.multiply(up);
+
+        return this;
     }
 
     /**
@@ -224,11 +244,14 @@ public class Camera {
     public Camera rotateRight(double degrees) {
         double rads = degrees * (Math.PI / 180);
 
-        return applyTransformation(
-                new Matrix33 (
-                        Math.cos(rads), -Math.sin(rads), 0,
-                        Math.sin(rads), Math.cos(rads), 0,
-                        0, 0, 1));
+        Matrix33 camRotation = TransformationFactory.stdToBasis(to, up, right)
+                .multiply(TransformationFactory.yRotation(rads))
+                .multiply(TransformationFactory.basisToStd(to, up, right));
+
+        to = camRotation.multiply(to);
+        right = camRotation.multiply(right);
+
+        return this;
     }
 
     /**
