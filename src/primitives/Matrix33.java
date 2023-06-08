@@ -43,12 +43,6 @@ public class Matrix33 {
         mat[2][2] = i;
     }
 
-    public Matrix33(Vector row1, Vector row2, Vector row3) {
-        this(row1.getX(), row1.getY(), row1.getZ(),
-             row2.getX(), row2.getY(), row2.getZ(),
-             row3.getX(), row3.getY(), row3.getZ());
-    }
-
     /**
      * Gets the 2x2 minor of the matrix for row, col
      * @param row The minor row
@@ -127,7 +121,7 @@ public class Matrix33 {
     public double det() {
         double result = 0;
         for (int i = 0; i < 3; ++i) {
-            double scale = (i % 2 == 0) ? 1 : -1;
+            double scale = (i % 2 == 0) ? mat[i][0] : -mat[i][0];
             result += scale * det22(minor(i, 0));
         }
 
