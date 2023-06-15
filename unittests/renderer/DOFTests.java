@@ -20,7 +20,7 @@ public class DOFTests {
     private Scene scene = null;
     private Camera camera = new Camera(new Point(0,500, 2500), new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVPSize(300, 300).setVPDistance(1250).rotateUp(-12);
-    private int numRays = 16;
+    private int numRays = 100;
 
     private void initScene() {
         if (scene != null) return;

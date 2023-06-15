@@ -3,6 +3,7 @@ package renderer;
 import primitives.*;
 
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
 
 import static primitives.Util.isZero;
 
@@ -164,6 +165,11 @@ public class Camera {
         return this;
     }
 
+    private void castRay(int row, int col) {
+        Ray currRay = constructRay(imageWriter.getNx(), imageWriter.getNy(), col, row);
+        imageWriter.writePixel(col, row, rayTracer.traceRay(currRay));
+    }
+
     /**
      * Finds and sets the color of each pixel in the viewplane.
      */
@@ -172,13 +178,29 @@ public class Camera {
             throw new MissingResourceException("The camera is object is not fully built.", "Camera", getMissingResource());
         }
 
-        // Shoot a ray at every pixel
-        for (int row = 0; row < imageWriter.getNy(); ++row) {
-            for (int col = 0; col < imageWriter.getNx(); ++col) {
-                Ray currRay = constructRay(imageWriter.getNx(), imageWriter.getNy(), col, row);
-                imageWriter.writePixel(col, row, rayTracer.traceRay(currRay));
-            }
+        int threadsCount = 12;
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        Pixel.initialize(nY, nX, 1);
+        while (threadsCount -- > 0) {
+            new Thread(() -> {
+                for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone()) {
+                    castRay(pixel.row, pixel.col);
+                }
+            }).start();
         }
+        Pixel.waitToFinish();
+
+//        for (int i = 0; i < imageWriter.getNy(); ++i) {
+//            for (int j = 0; j < imageWriter.getNx(); ++j) {
+//                castRay(i, j);
+//                Pixel.pixelDone();
+//                Pixel.printPixel();
+//            }
+//        }
+
         return imageWriter;
     }
 
