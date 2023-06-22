@@ -14,6 +14,9 @@ public class Camera {
     // Location of the camera in 3D space
     private Point location;
 
+    private int numThreads = 1;
+    private double printInterval = 0;
+
     // Directions for which way the camera is facing
     private Vector to, up, right;
 
@@ -165,6 +168,17 @@ public class Camera {
         return this;
     }
 
+    public Camera setMultithreading(int numThreads) {
+        this.numThreads = numThreads;
+        return this;
+    }
+
+    public Camera setDebugPrint(double printInterval) {
+        this.printInterval = printInterval;
+
+        return this;
+    }
+
     private void castRay(int row, int col) {
         Ray currRay = constructRay(imageWriter.getNx(), imageWriter.getNy(), col, row);
         imageWriter.writePixel(col, row, rayTracer.traceRay(currRay));
@@ -178,20 +192,30 @@ public class Camera {
             throw new MissingResourceException("The camera is object is not fully built.", "Camera", getMissingResource());
         }
 
-        int threadsCount = 12;
-
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        Pixel.initialize(nY, nX, 1);
-        while (threadsCount -- > 0) {
-            new Thread(() -> {
-                for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone()) {
-                    castRay(pixel.row, pixel.col);
+        Thread[] threads = new Thread[this.numThreads];
+
+        int threadsCount = this.numThreads;
+        Pixel.initialize(nY, nX, printInterval);
+        while (--threadsCount >= 0) {
+            threads[threadsCount] = new Thread(() -> {
+                for (Pixel pixel = Pixel.nextPixel(); pixel != null; pixel = Pixel.nextPixel()) {
+                    castRay(pixel.row(), pixel.col());
+                    Pixel.pixelDone();
                 }
-            }).start();
+            });
+
+            threads[threadsCount].start();
         }
-        Pixel.waitToFinish();
+
+        for (Thread t : threads) {
+            try {
+                t.join();
+            } catch (Exception e) {}
+        }
+
 
 //        for (int i = 0; i < imageWriter.getNy(); ++i) {
 //            for (int j = 0; j < imageWriter.getNx(); ++j) {

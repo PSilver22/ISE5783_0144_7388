@@ -31,7 +31,12 @@ public class GridDistribution extends PointDistribution {
 
         double gap = sideSize / sideResolution;
 
-        Point topLeft = center.add(up.scale(sideSize / 2)).subtract(right.scale(sideSize / 2));
+        Point topLeft;
+        try {
+            topLeft = center.add(up.scale(sideSize / 2)).subtract(right.scale(sideSize / 2));
+        } catch (IllegalArgumentException e) {
+            topLeft = Point.ZERO;
+        }
 
         for (int row = 0; row < sideResolution; ++row) {
             for (int col = 0; col < sideResolution; ++col) {
